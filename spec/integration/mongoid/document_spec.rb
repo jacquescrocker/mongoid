@@ -599,14 +599,14 @@ describe Mongoid::Document do
 
     context "multiple saves" do
 
-      before do
-        5.times do |n|
-          @comment.save
-        end
-      end
-
       it "creates new versions" do
         @from_db = Comment.find(@comment.id)
+        
+        5.times do |n|
+          @from_db.text = n.to_s
+          @from_db.save
+        end
+          
         @from_db.version.should == 6
         @from_db.versions.size.should == 5
       end

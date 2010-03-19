@@ -5,6 +5,7 @@ module Mongoid #:nodoc
     included do
       # All modules that a +Document+ is composed of are defined in this
       # module, to keep the document class from getting too cluttered.
+      include ActiveModel::AttributeMethods
       include ActiveModel::Conversion
       include ActiveModel::Naming
       include ActiveModel::Serialization
@@ -12,6 +13,7 @@ module Mongoid #:nodoc
       include Mongoid::Attributes
       include Mongoid::Callbacks
       include Mongoid::Commands
+      include Mongoid::Dirty
       include Mongoid::Extras
       include Mongoid::Fields
       include Mongoid::Indexes
