@@ -4,9 +4,13 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 MODELS = File.join(File.dirname(__FILE__), "models")
 $LOAD_PATH.unshift(MODELS)
 
-require 'rubygems'
-
-gem "mocha", ">= 0.9.8"
+begin
+  require File.expand_path("../../.bundle/environment", __FILE__)
+rescue LoadError
+  require 'rubygems'
+  require 'bundler'
+  Bundler.require
+end
 
 require "mongoid"
 require "mocha"

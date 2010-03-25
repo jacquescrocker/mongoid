@@ -16,12 +16,13 @@ begin
     gem.add_dependency("will_paginate", ">= 3.0.pre")
     gem.add_dependency("mongo", ">= 0.19.1")
 
+    gem.add_development_dependency("bundler", ">= 0.9.5")
     gem.add_development_dependency("rspec", ">= 1.3.0")
     gem.add_development_dependency("mocha", ">= 0.9.8")
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
+  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
 
 Spec::Rake::SpecTask.new(:spec) do |spec|

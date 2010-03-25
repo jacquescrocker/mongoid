@@ -19,12 +19,6 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-require "rubygems"
-
-gem "activemodel", ">= 3.0.pre"
-gem "will_paginate", ">= 3.0.pre"
-gem "mongo", ">= 0.19.1"
-
 require "delegate"
 require "singleton"
 require "time"
