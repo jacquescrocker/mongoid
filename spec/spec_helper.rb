@@ -29,3 +29,12 @@ Spec::Runner.configure do |config|
     Mongoid.master.collections.each(&:drop)
   end
 end
+
+# Hack to get the mock to act like its set :class attribute
+module Mocha
+  class Mock
+    def is_a?(klass)
+      self.class == klass
+    end
+  end
+end

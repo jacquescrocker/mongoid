@@ -6,6 +6,8 @@ describe Mongoid::Associations do
     Person.delete_all
     Game.delete_all
     Post.delete_all
+    Blog.delete_all
+    Article.delete_all
   end
 
   context "anonymous extensions" do
@@ -81,6 +83,17 @@ describe Mongoid::Associations do
       ca_homes = @person.addresses.california.homes.rodeo
       ca_homes.size.should == 1
       ca_homes.should == [ @la_home ]
+    end
+    
+    it "should fail if the object type is different than the association type" do
+      article = Article.new(:name => 'My Dog Runs', :entry => 'I love him so much')
+      article.notes.build(:body => 'this is a stupid article. stop writing')
+      article.save
+
+      blog = Blog.new(:title => 'My Cat Blog')
+      lambda { 
+        blog.editorials << article
+      }.should raise_error(Mongoid::Errors::InvalidTypeForAssociation)
     end
   end
 

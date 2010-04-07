@@ -101,4 +101,23 @@ describe Mongoid::Errors do
       end
     end
   end
+  
+  describe Mongoid::Errors::InvalidTypeForAssociation do
+    
+    describe "#message" do
+      
+      context "default" do
+        
+        before do
+          @association_class = Address
+          @obj_class = Phone
+          @error = Mongoid::Errors::InvalidTypeForAssociation.new(@association_class, @obj_class)
+        end
+        
+        it "contains cannot add an object of type class" do
+          @error.message.should include("cannot add an object of type Phone")
+        end
+      end
+    end
+  end
 end

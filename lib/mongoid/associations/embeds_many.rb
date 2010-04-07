@@ -11,6 +11,7 @@ module Mongoid #:nodoc:
       # the process.
       def <<(*documents)
         documents.flatten.each do |doc|
+          raise Errors::InvalidTypeForAssociation.new(doc.class, klass) unless doc.is_a?(klass)
           doc.parentize(@parent, @association_name)
           @target << doc
           doc._index = @target.size - 1
