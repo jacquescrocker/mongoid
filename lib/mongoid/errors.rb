@@ -86,6 +86,23 @@ module Mongoid #:nodoc
           "the root document"
       end
     end
+    
+    # This error is raised when trying to add an object of a one type
+    # to an association defined for a different object type
+    #
+    # Example:
+    #
+    # <tt>InvalidTypeForAssociation.new(Address, Phone)</tt>
+    class InvalidTypeForAssociation < RuntimeError
+      def initialize(association_class, obj_class)
+        @association_class = association_class
+        @obj_class = obj_class
+      end
+      def message
+        "You cannot add an object of type #{@obj_class} to an association of " +
+          "type #{@association_class}"
+      end
+    end
 
   end
 end

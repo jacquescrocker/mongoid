@@ -30,9 +30,11 @@ Spec::Runner.configure do |config|
   end
 end
 
-# WTF???
-# class Spec::Mocks::Mock
-#   def is_a?(klass)
-#     "asdfasdflkjaklsdf"
-#   end
-# end
+# Hack to get the mock to act like its set :class attribute
+module Mocha
+  class Mock
+    def is_a?(klass)
+      self.class == klass
+    end
+  end
+end
