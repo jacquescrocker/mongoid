@@ -252,7 +252,7 @@ describe Mongoid::Associations::EmbedsMany do
         Mongoid::Associations::Options.new(:name => :addresses)
       )
       @association.clear
-      @address = stub(:parentize => true, :_index= => true, :notify => true, :matches? => true)
+      @address = stub(:parentize => true, :_index= => true, :notify => true, :matches? => true, :class => Address)
       @association << @address
     end
 

@@ -29,3 +29,10 @@ Spec::Runner.configure do |config|
     Mongoid.master.collections.each(&:drop)
   end
 end
+
+# WTF???
+# class Spec::Mocks::Mock
+#   def is_a?(klass)
+#     "asdfasdflkjaklsdf"
+#   end
+# end
