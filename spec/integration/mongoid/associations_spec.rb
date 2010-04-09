@@ -343,6 +343,19 @@ describe Mongoid::Associations do
         end
       end
 
+      context "updating embedded association" do
+        before do
+          @person = Person.create(:title => "Test Person", :ssn => "444-33-1111")
+        end
+
+        it "should update embedded association" do
+          vid = @person.videos.build :title => "l33t h4X"
+          @person.save
+
+          Person.find(@person.id).videos.count.should == 1
+        end
+      end
+
       describe "#first" do
 
         let(:person) do
