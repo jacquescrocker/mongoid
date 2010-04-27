@@ -14,7 +14,7 @@ describe Mongoid::Attributes do
 
     describe "#association_attributes=" do
 
-      context "on a has many association" do
+      context "on a embeds many association" do
 
         context "when a reject block supplied" do
 
@@ -60,7 +60,25 @@ describe Mongoid::Attributes do
           end
 
           it "updates the existing attributes on the association" do
-            @person.addresses.size.should == 2
+            @person.addresses.size.should == 1
+          end
+
+        end
+
+        context "when :allow_destroy is enabled" do
+          before do
+            @person = Person.new
+            @person.favorites.build(:title => "Ice Cream")
+            @person.favorites.build(:title => "Jello")
+            @attributes = {
+              "0" => { "title" => "Jello", "_destroy" => "true" }
+            }
+            @person.favorites_attributes = @attributes
+          end
+
+          it "removes the items that have _destroy => true set" do
+            @person.favorites.size.should == 1
+            @person.favorites.first.title == "Ice Cream"
           end
 
         end
