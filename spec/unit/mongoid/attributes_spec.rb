@@ -66,6 +66,49 @@ describe Mongoid::Attributes do
           end
         end
 
+        context "when :allow_destroy is set to true" do
+          before do
+            @person = Person.new
+            @person.favorites.build(:title => "Ice Cream")
+            @person.favorites.build(:title => "Jello")
+            @attributes = {
+              "0" => { "title" => "Jello", "_destroy" => "true" }
+            }
+            @person.favorites_attributes = @attributes
+          end
+
+          it "removes the items that have _destroy => true set" do
+            pending
+            @person.favorites.size.should == 1
+            @person.favorites.first.title == "Ice Cream"
+          end
+        end
+
+        context "when :limit is set to 5" do
+          before do
+            @person = Person.new
+            # .....
+          end
+
+          it "allows adding 5 favorites" do
+            pending
+          end
+
+          it "it raises exception when adding more than 5 favorites" do
+            pending
+          end
+        end
+
+        context "when :update_only is set to true" do
+          before do
+            @person = Person.new
+            # ....
+          end
+
+          it "only updates but doesnt add or delete" do
+            pending
+          end
+        end
       end
 
       context "on a has one association" do
