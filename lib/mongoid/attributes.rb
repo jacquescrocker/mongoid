@@ -155,7 +155,7 @@ module Mongoid #:nodoc:
           end
         end
       end
-
+      
       # Return true if writing to the given field is allowed
       def write_allowed?(key)
         name = key.to_s
@@ -186,8 +186,8 @@ module Mongoid #:nodoc:
             reject(attrs, options)
             association = send(name)
             if association
-              observe(association, true)
-              association.nested_build(attrs)
+              # observe(association, true)
+              association.nested_build(attrs, options)
             else
               send("build_#{name}", attrs)
             end

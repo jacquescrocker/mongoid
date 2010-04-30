@@ -14,7 +14,7 @@ describe Mongoid::Attributes do
 
     describe "#association_attributes=" do
 
-      context "on a has many association" do
+      context "on a embeds many association" do
 
         context "when a reject block supplied" do
 
@@ -66,9 +66,9 @@ describe Mongoid::Attributes do
           end
         end
 
-        context "when :allow_destroy is set to true" do
+        context "when :allow_destroy is enabled" do
           before do
-            @person = Person.new
+            @person = Person.new(:title => "Sir", :ssn => "555-66-9999")
             @person.favorites.build(:title => "Ice Cream")
             @person.favorites.build(:title => "Jello")
             @attributes = {
@@ -78,7 +78,6 @@ describe Mongoid::Attributes do
           end
 
           it "removes the items that have _destroy => true set" do
-            pending
             @person.favorites.size.should == 1
             @person.favorites.first.title == "Ice Cream"
           end
