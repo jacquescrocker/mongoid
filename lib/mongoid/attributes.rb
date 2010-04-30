@@ -195,7 +195,7 @@ module Mongoid #:nodoc:
               # observe(association, true)
               association.nested_build(attrs, options)
             else
-              send("build_#{name}", attrs)
+              send("build_#{name}", attrs, options)
             end
           end
         end

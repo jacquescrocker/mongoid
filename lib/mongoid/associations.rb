@@ -240,8 +240,8 @@ module Mongoid # :nodoc:
       # build_name(attributes)
       def add_builder(type, options)
         name = options.name.to_s
-        define_method("build_#{name}") do |attrs|
-          reset(name) { type.new(self, (attrs || {}).stringify_keys, options) }
+        define_method("build_#{name}") do |attrs, attr_options|
+          reset(name) { type.new(self, (attrs || {}).stringify_keys, options) } unless type == Associations::EmbedsOne && attr_options[:update_only]
         end
       end
 
@@ -249,8 +249,8 @@ module Mongoid # :nodoc:
       # create_name(attributes)
       def add_creator(type, options)
         name = options.name.to_s
-        define_method("create_#{name}") do |attrs|
-          send("build_#{name}", attrs).tap(&:save)
+        define_method("create_#{name}") do |attrs, attr_options|
+          send("build_#{name}", attrs, ops).tap(&:save) unless type == Associations::EmbedsOne && attr_options[:update_only]
         end
       end
 

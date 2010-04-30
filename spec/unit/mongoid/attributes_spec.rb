@@ -113,32 +113,35 @@ describe Mongoid::Attributes do
           end
         end
 
-        context "when :update_only is set to true" do
-          before do
-            @person = Person.new
-            # ....
-          end
-
-          it "only updates but doesnt add or delete" do
-            pending
-          end
-        end
       end
 
       context "on a has one association" do
 
         before do
           @person = Person.new
-          @attributes = {
-            "first_name" => "Fernando", "last_name" => "Torres"
-          }
-          @person.name_attributes = @attributes
+        end
+        
+        it "can be added if :update_only is false" do
+          @person.pet_attributes = { "name" => "Darwin" }
+          @person.pet.name.should == "Darwin"
+        end
+        
+        it "can be updated if :update_only is false" do
+          @person.pet_attributes = { "name" => "Darwin" }
+          @person.pet_attributes = { "name" => "Zulu" }
+          @person.pet.name.should == "Zulu"
         end
 
-        it "replaces the document on the association" do
-          name = @person.name
-          name.first_name.should == "Fernando"
-          name.last_name.should == "Torres"
+        it "can not be added if :update_only is true" do
+          @person.name_attributes = { "first_name" => "Fernando", "last_name" => "Torres" }
+          @person.name.should be_blank
+        end
+
+        it "can be updated if :update_only is true" do
+          @person = Person.new(:name => { "first_name" => "Marco", "last_name" => "Polo" })
+          @person.name_attributes = { "first_name" => "Fernando", "last_name" => "Torres" }
+          @person.name.first_name.should == "Fernando"
+          @person.name.last_name.should == "Torres"
         end
 
       end
