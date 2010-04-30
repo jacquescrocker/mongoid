@@ -86,15 +86,30 @@ describe Mongoid::Attributes do
         context "when :limit is set to 5" do
           before do
             @person = Person.new
-            # .....
           end
 
           it "allows adding 5 favorites" do
-            pending
+            @attributes = {
+              "0" => { "title" => "Ice Cream" },
+              "1" => { "title" => "Jello" },
+              "2" => { "title" => "Sorbet" },
+              "3" => { "title" => "Cake" },
+              "4" => { "title" => "Tim Tams" }
+            }
+            @person.favorites_attributes = @attributes
+            @person.favorites.size.should == 5
           end
 
           it "it raises exception when adding more than 5 favorites" do
-            pending
+            @attributes = {
+              "0" => { "title" => "Ice Cream" },
+              "1" => { "title" => "Jello" },
+              "2" => { "title" => "Sorbet" },
+              "3" => { "title" => "Cake" },
+              "4" => { "title" => "Tim Tams" },
+              "5" => { "title" => "Milo" }
+            }
+            lambda { @person.favorites_attributes = @attributes }.should raise_error(Mongoid::Errors::TooManyNestedAttributeRecords)
           end
         end
 

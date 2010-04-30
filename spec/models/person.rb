@@ -54,7 +54,7 @@ class Person
   accepts_nested_attributes_for :name
   
   embeds_many :favorites
-  accepts_nested_attributes_for :favorites, :allow_destroy => true
+  accepts_nested_attributes_for :favorites, :allow_destroy => true, :limit => 5
 
   has_one_related :game do
     def extension

@@ -156,6 +156,11 @@ module Mongoid #:nodoc:
         end
       end
       
+      # Used when supplying a :limit as an option to accepts_nested_attributes_for
+      def limit(attributes, name, options)
+        raise Mongoid::Errors::TooManyNestedAttributeRecords.new(name, options[:limit]) if options[:limit] && attributes.size > options[:limit]
+      end
+      
       # Return true if writing to the given field is allowed
       def write_allowed?(key)
         name = key.to_s
@@ -184,6 +189,7 @@ module Mongoid #:nodoc:
         associations.each do |name|
           define_method("#{name}_attributes=") do |attrs|
             reject(attrs, options)
+            limit(attrs, name, options)
             association = send(name)
             if association
               # observe(association, true)
