@@ -79,7 +79,7 @@ describe Mongoid::Attributes do
 
           it "removes the items that have _destroy => true set" do
             @person.favorites.size.should == 1
-            @person.favorites.first.title.should == "Jello"
+            @person.favorites.first.title.should == "Ice Cream"
           end
         end
 
