@@ -78,7 +78,6 @@ namespace :db do
     task :convert_to_objectids => :environment do
 
       require 'ruby-debug';debugger
-      puts Mongoid.descendents
 
 
 
